@@ -18,10 +18,16 @@ jobs:
           name: "Install Go modules"
           command: |
             go get -v -t -d ./...
+            go get -u github.com/jstemmer/go-junit-report
       - run:
           name: "Create a temp directory for artifacts"
           command: |
             mkdir -p /tmp/artifacts
+      - run: 
+          name: "Run Tests and generate Junit.xml"
+          command: |
+            go test ./... -v 2>&1 | go-junit-report > report.xml
+            mv report.xml /tmp/artifacts
       - run:
           name: "Run Code Coverage"
           command: |
