@@ -21,6 +21,7 @@ jobs:
           command: |
             mkdir -p /tmp/artifacts
       - run:
+          name: "Run Code Coverage"
           command: |
             go test -v ./... -coverprofile=coverage.out
             go tool cover -html=ccoverage.out -o coverage.html
