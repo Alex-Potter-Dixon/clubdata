@@ -23,7 +23,7 @@ jobs:
           name: "Run Code Coverage"
           command: |
             go test -v ./... -coverprofile=coverage.out
-            go tool cover -html=ccoverage.out -o coverage.html
+            go tool cover -html=coverage.out -o coverage.html
             mv coverage.html /tmp/artifacts
       - store_artifacts:
           path: /tmp/artifacts
