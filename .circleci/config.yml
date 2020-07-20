@@ -22,12 +22,14 @@ jobs:
       - run:
           name: "Create a temp directory for artifacts"
           command: |
-            mkdir -p /tmp/artifacts
+            mkdir -p /tmp/artifacts          
       - run: 
           name: "Run Tests and generate Junit.xml"
           command: |
-            go test ./... -v 2>&1 | go-junit-report > report.xml
-            mv report.xml /tmp/artifacts
+            mkdir -p ~/test-results/junit/
+            go test ./... -v 2>&1 | go-junit-report > ~/test-results/junit/report.xml              
+      - store_test_results:
+          path: ~/test-results/junit/report.xml
       - run:
           name: "Run Code Coverage"
           command: |
@@ -36,8 +38,8 @@ jobs:
             mv coverage.html /tmp/artifacts
       - store_artifacts:
           path: /tmp/artifacts
-      - store_test_results:
-          path: /tmp/artifacts/report.xml
+      - store_artifacts:
+          path: ~/test-results/junit
       - codecov/upload:
           file: /tmp/artifacts/coverage.html
 
